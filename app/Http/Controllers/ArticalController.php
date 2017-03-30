@@ -18,13 +18,25 @@ class ArticalController extends Controller
     {
        
     	$this->validate(request(),['body'=>'required']);
+        $name=request('file_name');
+
+        if($name){
     	Artical::create([
     		'title' => request('title'),
     		'body' => request('body'),
-    		'file_name' => request('file_name'),
+    		'file_name' => $name,
     		'user_id' => auth()->id()]);
+            }
+        else
+    {
+       Artical::create([
+            'title' => request('title'),
+            'body' => request('body'),
+            'file_name' => '',
+            'user_id' => auth()->id()]);
+        
+    }
         return "success";
-
     }
     public function upload_image()
     {
