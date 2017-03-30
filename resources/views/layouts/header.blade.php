@@ -10,31 +10,22 @@
       <li class="nav-item col-md-4">
         <a class="nav-link " href="/" style="color:white">Home</a>
       </li>
+      @if(! Auth::check())
       <li class="nav-item col-md-4">
         <a class="nav-link" href="/sign" style="color:white">Sign in</a>
       </li>
       <li class="nav-item col-md-4">
-        <a class="nav-link" href="/form" style="color:white">Inscription</a>
+        <a class="nav-link" href="/form" style="color:white">Registration</a>
+      </li>
+      @endif
+      @if(Auth::check())
+       <li class="nav-item col-md-4">
+        <a class="nav-link" href="#" style="color:white">Profil</a>
       </li>
     </ul>
-   
-  </div>
-  <div  class="container">   
-
-     <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search..">
-      <label class="nav-item" style="color:white">With: &nbsp;
-      </label>
-      <select class="form-control mr-sm-2">
-      
-        <option>Creation Date</option>
-        <option>Adder</option>
-        <option>Subject</option>
-        
-      </select>
-      <button class="btn btn-outline-secondary my-2 my-sm-0 btn-sm" type="submit" style="color:white">Search</button>
-    </form>
-
+    
+   <a class="nav-link" href="/logout" style="color:white; float:right"> Logout</a>
+  @endif
   </div>
 
 </nav>

@@ -6,16 +6,26 @@ use Illuminate\Http\Request;
 use App\Comment;
 class CommentController extends Controller
 {
+	public function __construct()
+	{
+
+		$this->middleware('auth')->except(['index']);
+	}
 	 public function index($id)
+	
    {
    	$comment=Comment::get()->where('artical_id',$id);
    	return view('comment',compact('comment'));
    }
 
-	public function addComm()
+	public function addComm($id)
 	{
 		$this->validate(request(),['body'=>'required'
     		]);
-		//Comment::create(request(['body',]));
+		Comment::create([
+			'body' => request('body'),
+			'user_id' => auth()->id(),
+			'artical_id' => $id]);
+		return "done";
 	}
 }

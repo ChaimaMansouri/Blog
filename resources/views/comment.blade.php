@@ -10,5 +10,7 @@
         </div>
           </div> 
           <br>
+          
           @endforeach
-       
+
+      
