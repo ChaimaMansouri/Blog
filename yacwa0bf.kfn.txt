@@ -1,0 +1,42 @@
+﻿
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	modified:   app/Comment.php
+#	modified:   app/Http/Controllers/ArticalController.php
+#	modified:   app/Http/Controllers/CommentController.php
+#	modified:   app/Http/Controllers/UserController.php
+#	modified:   app/Http/Kernel.php
+#	modified:   app/Model.php
+#	modified:   app/User.php
+#	modified:   database/migrations/2017_02_19_143308_create_users_table.php
+#	modified:   database/migrations/2017_02_19_143326_create_articals_table.php
+#	deleted:    public/css/bootstrap-grid.css
+#	deleted:    public/css/bootstrap-grid.css.map
+#	deleted:    public/css/bootstrap-grid.min.css
+#	deleted:    public/css/bootstrap-grid.min.css.map
+#	deleted:    public/css/bootstrap-reboot.css
+#	deleted:    public/css/bootstrap-reboot.css.map
+#	deleted:    public/css/bootstrap-reboot.min.css
+#	deleted:    public/css/bootstrap-reboot.min.css.map
+#	deleted:    public/css/bootstrap.css
+#	deleted:    public/css/bootstrap.css.map
+#	deleted:    public/css/bootstrap.min.css
+#	deleted:    public/css/bootstrap.min.css.map
+#	new file:   public/css/dropzone.css
+#	new file:   public/js/dropzone.js
+#	deleted:    readme.md
+#	modified:   resources/views/comment.blade.php
+#	deleted:    resources/views/form.blade.php
+#	modified:   resources/views/layouts/errors.blade.php
+#	modified:   resources/views/layouts/header.blade.php
+#	modified:   resources/views/layouts/master.blade.php
+#	modified:   resources/views/layouts/modal_comment.blade.php
+#	modified:   resources/views/layouts/sidebar.blade.php
+#	new file:   resources/views/sessions/create.blade.php
+#	renamed:    resources/views/sign.blade.php -> resources/views/sessions/sign.blade.php
+#	modified:   resources/views/welcome.blade.php
+#	modified:   routes/web.php
+#
+
