@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Artical;
 use App\Comment;
-
+use Illuminate\Support\Facades\Storage;
 
 class ArticalController extends Controller
 {
@@ -45,13 +45,19 @@ class ArticalController extends Controller
        $name="";
         if ($file) 
         {
-        $path=$file->store('public/image');
+        $path=$file->store('image');
         }
         $t=explode('/',$path);
 
         $name=$t[count($t)-1];
 
         return $name;
+    }
+    public function delete_photo()
+    {
+        $img=request('delPhoto');
+         Storage::delete("image/".$img);
+         return "success";
     }
   
 }

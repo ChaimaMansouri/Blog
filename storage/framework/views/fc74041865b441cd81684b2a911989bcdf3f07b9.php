@@ -20,7 +20,7 @@
       <?php endif; ?>
       <?php if(Auth::check()): ?>
        <li class="nav-item col-md-4">
-        <a class="nav-link" href="#" style="color:white">Profil</a>
+        <a class="nav-link" href="/profil" style="color:white">Profil</a>
       </li>
     </ul>
     

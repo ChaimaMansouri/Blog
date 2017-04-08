@@ -30,7 +30,7 @@
   
   @foreach($a as $artical)
 @include('layouts.modal_comment')
-@include('layouts.modal_approve')
+
   <div class="card-block">
 
     <h4 class="card-subtitle mb-2 text-muted">{{$artical->title}}</h4>
@@ -53,19 +53,41 @@
 
 
   <div class="card-block" id="{{$artical->id}}">
-    
-    <button type="button" class="btn btn-outline-secondary btn-sm myApp" > 
-    @if ($artical->approves->count()==1 | $artical->approves->count()==0)
-    
-    {{$artical->approves->count()}} Approve
+  @if(auth()->id()==null)
+  
+  <?php $user = 0; ?>
+  @else
+  <?php $user=auth()->id(); ?>
+
+  @endif
+    @if ($artical->approves->count()==0)
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
+  
+   
+    0  Approve
+    </button>
+    @elseif ($artical->approves->count()==1)
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{$user}});">
+    1 Approve
+    <span class="tooltiptext "> 
+    @foreach($artical->approves as $app)
+     {{$app->user->firstName}} {{$app->user->lastName}}
+     @endforeach
+      </span>
+      </button>
     
     @else
-     
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
     {{$artical->approves->count()}} Approves
-    
+    <span class="tooltiptext"> 
+    @foreach($artical->approves as $app)
+     {{$app->user->firstName}} {{$app->user->lastName}}
+     <br>
+     @endforeach
+      </span>
+   </button>
     @endif
-    </button>
-   
+      
     <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md myCom ">Comment</button>
 
   </div>
@@ -123,5 +145,30 @@ function submitForm(aid)
 return false;
 
 }
+
+  function addapp(id,user) {
+    if (!user) {
+     alert('sign in Please !');
+    }
+    if (user) {
+    $.ajax({
+      url:"/approve",
+      method:"post",
+      data:{
+      'id':id
+      },
+      success:function(res){
+        console.log(res);
+      },
+      error:function(res){
+        console.log('error');
+        console.log(res);
+      }
+    });
+    location.reload();
+  }
+  }
+
+
  
 </script>

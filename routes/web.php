@@ -12,5 +12,8 @@ Route::post('/comment/{id}','CommentController@addComm');
 Route::get('/logout','UserController@destroy');
 Route::post('/article','ArticalController@upload_image');
 Route::post('/article/store','ArticalController@store');
+Route::get('/profil','UserController@profil');
+Route::post('/approve','ApproveController@store');
+Route::post('/photo_delete','ArticalController@delete_photo');
 
 

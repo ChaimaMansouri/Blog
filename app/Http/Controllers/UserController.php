@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Artical;
 class UserController extends Controller
 {
     public function __construct()
 {
-    $this->middleware('guest',['except'=>'destroy']);
+$this->middleware('guest')->except(['destroy','profil']);
 }
 
     public function create()
@@ -54,6 +55,13 @@ class UserController extends Controller
             return redirect()->home();
         
     }
+
+    public function profil()
+    {
+        $ar=Artical::where('user_id',auth()->id())->get();
+        return view('sessions.profil',compact('ar'));
+    }
+
     public function destroy()
     {
         auth()->logout();

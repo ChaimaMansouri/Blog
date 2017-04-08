@@ -29,7 +29,7 @@
   
   <?php $__currentLoopData = $a; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $artical): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <?php echo $__env->make('layouts.modal_comment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-<?php echo $__env->make('layouts.modal_approve', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+
   <div class="card-block">
 
     <h4 class="card-subtitle mb-2 text-muted"><?php echo e($artical->title); ?></h4>
@@ -53,19 +53,43 @@
 
 
   <div class="card-block" id="<?php echo e($artical->id); ?>">
-    
-    <button type="button" class="btn btn-outline-secondary btn-sm myApp" > 
-    <?php if($artical->approves->count()==1 | $artical->approves->count()==0): ?>
-    
-    <?php echo e($artical->approves->count()); ?> Approve
+  <?php if(auth()->id()==null): ?>
+  
+  <?php $user = 0; ?>
+  <?php else: ?>
+  <?php $user=auth()->id(); ?>
+
+  <?php endif; ?>
+    <?php if($artical->approves->count()==0): ?>
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
+  
+   
+    0  Approve
+    </button>
+    <?php elseif($artical->approves->count()==1): ?>
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
+    1 Approve
+    <span class="tooltiptext "> 
+    <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+     <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
+
+     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </span>
+      </button>
     
     <?php else: ?>
-     
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
     <?php echo e($artical->approves->count()); ?> Approves
-    
+    <span class="tooltiptext"> 
+    <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+     <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
+
+     <br>
+     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+      </span>
+   </button>
     <?php endif; ?>
-    </button>
-   
+      
     <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md myCom ">Comment</button>
 
   </div>
@@ -123,6 +147,31 @@ function submitForm(aid)
 return false;
 
 }
+
+  function addapp(id,user) {
+    if (!user) {
+     alert('sign in Please !');
+    }
+    if (user) {
+    $.ajax({
+      url:"/approve",
+      method:"post",
+      data:{
+      'id':id
+      },
+      success:function(res){
+        console.log(res);
+      },
+      error:function(res){
+        console.log('error');
+        console.log(res);
+      }
+    });
+    location.reload();
+  }
+  }
+
+
  
 </script>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

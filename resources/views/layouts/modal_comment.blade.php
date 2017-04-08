@@ -40,7 +40,7 @@ $(document).ready(function(){
      var id=$(this).parent().attr('id');
      
       $(".formClassComm").attr("id",id);
-      $("#myModal").modal({show: true});
+      $("#myModal").modal({keyboard:true,show: true});
     $("#modal_comm").load("/comment/"+$(this).parent().attr('id'));
    
 

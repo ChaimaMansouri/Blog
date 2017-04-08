@@ -10,4 +10,9 @@ class Approve extends Model
    {
    	return $this->belongsTo(User::class);
    }
+   public function artical()
+   {
+   	return $this->belongsTo(Artical::class);
+   }
+  
 }

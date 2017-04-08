@@ -139,7 +139,7 @@
       hiddenInputContainer: "body",
       capture: null,
       renameFilename: null,
-      dictDefaultMessage: "Drop files here to upload",
+      dictDefaultMessage: "Drop Photo here to upload",
       dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
       dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
       dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
@@ -1059,6 +1059,23 @@
       }
       this.files = without(this.files, file);
       this.emit("removedfile", file);
+      delPhoto=file.previewTemplate.id;
+      
+      $.ajax({
+        url:"/photo_delete",
+        method:"post",
+        data:{
+          'delPhoto':delPhoto
+        },
+       success: function(result) {
+        console.log(result);
+      },
+      error: function(result) {
+        console.log('error');
+        console.log(result);
+      },
+      });
+      
       if (this.files.length === 0) {
         return this.emit("reset");
       }
