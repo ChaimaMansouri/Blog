@@ -15,20 +15,21 @@ class ApproveController extends Controller
    public function store()
    {
       
-   	$app=Approve::where(['user_id'=>auth()->id(),'artical_id'=>request('id')])->get()->first();
-   	if($app)
-   	{
-   		$app->delete();
-   	}
-   	else
+    $app=Approve::where(['user_id'=>auth()->id(),'artical_id'=>request('id')])->get()->first();
+    if($app)
+    {
+     $app->delete();
+    }
+    else
       {
-   	Approve::create([
-   		'user_id' => auth()->id(),
-   		'artical_id' =>request('id')
-   		]);
+    Approve::create([
+     'user_id' => auth()->id(),
+     'artical_id' =>request('id')
+     ]);
       }
-     
-      return "success";
+     $approve=Approve::with('user')->get()->where('artical_id',request('id'));
+   $json = $approve->toJson();
+      return response()->json($json);
   
    }
 }

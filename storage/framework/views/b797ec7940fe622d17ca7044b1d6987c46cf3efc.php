@@ -13,6 +13,7 @@
   
   
   
+  
   <?php $__currentLoopData = $ar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $artical): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <?php echo $__env->make('layouts.modal_comment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
@@ -26,10 +27,13 @@
   <img style="width:50%;height:50%;" src="storage/image/<?php echo e($artical->file_name); ?>">
  <br>
 <?php endif; ?>
+<br><br>
     <p class="card-text"><?php echo e($artical->body); ?></p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
-    Added <?php echo e($artical->created_at->toFormattedDateString()); ?>
+    Added by 
+  <a href="#"><?php echo e($artical->user->login); ?></a> at 
+  <?php echo e($artical->created_at->toFormattedDateString()); ?>
 
 
 </div>
@@ -38,41 +42,46 @@
 
   <div class="card-block" id="<?php echo e($artical->id); ?>">
     <?php if($artical->approves->count()==0): ?>
-   <a href="/approve/<?php echo e($artical->id); ?>" >
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e(auth()->id()); ?>);">
+  
    
-    <strong>0  Approve</strong>
-     </a>
+    0  Approve
+    </button>
     <?php elseif($artical->approves->count()==1): ?>
-     <a class="tooltip show" href="/approve/<?php echo e($artical->id); ?>">
-    <strong>1 Approve</strong>
-    <span class="tooltiptext"> 
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e(auth()->id()); ?>);">
+    1 Approve
+    <span class="tooltiptext "> 
     <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
      <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
 
      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </span>
-    </a>
+      </button>
+    
     <?php else: ?>
-    <a class="tooltip show" href="/approve/<?php echo e($artical->id); ?>">
-    <strong><?php echo e($artical->approves->count()); ?> Approves</strong>
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e(auth()->id()); ?>);">
+    <?php echo e($artical->approves->count()); ?> Approves
     <span class="tooltiptext"> 
     <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
      <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
 
+     <br>
      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
       </span>
-    </a>
+   </button>
     <?php endif; ?>
       
-   </form>
     <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md myCom ">Comment</button>
 
   </div>
 
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
+
 </div>
 </div>
+<br><br><br>
+
 </div>
 <div class="col-2">
   

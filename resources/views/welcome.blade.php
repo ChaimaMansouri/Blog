@@ -45,7 +45,7 @@
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
     Added by 
-  <a href="#">{{$artical->user->login}}</a> at 
+  <a href="/user/{{$artical->user->id}}">{{$artical->user->login}}</a> at 
   {{$artical->created_at->toFormattedDateString()}}
 
 </div>
@@ -69,7 +69,7 @@
     @elseif ($artical->approves->count()==1)
      <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{$user}});">
     1 Approve
-    <span class="tooltiptext "> 
+    <span class="tooltiptext" style="width:200px" > 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
      @endforeach
@@ -79,7 +79,7 @@
     @else
     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
     {{$artical->approves->count()}} Approves
-    <span class="tooltiptext"> 
+    <span class="tooltiptext" style="width:200px"> 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
      <br>
@@ -145,7 +145,6 @@ function submitForm(aid)
 return false;
 
 }
-
   function addapp(id,user) {
     if (!user) {
      alert('sign in Please !');
@@ -158,17 +157,33 @@ return false;
       'id':id
       },
       success:function(res){
-        console.log(res);
+        
+        var bb = JSON.parse(res);
+        if(bb.length>0)
+        {
+        var OurUsers ="";
+        $(bb).each(function(index,item){
+          OurUsers+=this.user.firstName+" "+this.user.lastName+ "<br>";
+        });
+        
+        var clone = $('#'+id).find(".tooltiptext").html(OurUsers).clone();
+        if(bb.length>1)
+        $('#'+id).find(".show").html(bb.length+" Approves").append(clone);
+        else 
+        $('#'+id).find(".show").html(bb.length+" Approve").append(clone);
+        }
+        else
+        { 
+           var clone = $('#'+id).find(".tooltiptext").text("No Approves").clone();
+          $('#'+id).find(".show").html("0 Approve").append(clone);
+        }
       },
       error:function(res){
         console.log('error');
         console.log(res);
       }
     });
-    location.reload();
+   
   }
   }
-
-
- 
 </script>

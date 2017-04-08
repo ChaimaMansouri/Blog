@@ -69,7 +69,7 @@
     <?php elseif($artical->approves->count()==1): ?>
      <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
     1 Approve
-    <span class="tooltiptext "> 
+    <span class="tooltiptext" style="width:200px" > 
     <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
      <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
 
@@ -80,7 +80,7 @@
     <?php else: ?>
     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
     <?php echo e($artical->approves->count()); ?> Approves
-    <span class="tooltiptext"> 
+    <span class="tooltiptext" style="width:200px"> 
     <?php $__currentLoopData = $artical->approves; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $app): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
      <?php echo e($app->user->firstName); ?> <?php echo e($app->user->lastName); ?>
 
@@ -147,7 +147,6 @@ function submitForm(aid)
 return false;
 
 }
-
   function addapp(id,user) {
     if (!user) {
      alert('sign in Please !');
@@ -160,18 +159,34 @@ return false;
       'id':id
       },
       success:function(res){
-        console.log(res);
+        
+        var bb = JSON.parse(res);
+        if(bb.length>0)
+        {
+        var OurUsers ="";
+        $(bb).each(function(index,item){
+          OurUsers+=this.user.firstName+" "+this.user.lastName+ "<br>";
+        });
+        
+        var clone = $('#'+id).find(".tooltiptext").html(OurUsers).clone();
+        if(bb.length>1)
+        $('#'+id).find(".show").html(bb.length+" Approves").append(clone);
+        else 
+        $('#'+id).find(".show").html(bb.length+" Approve").append(clone);
+        }
+        else
+        { 
+           var clone = $('#'+id).find(".tooltiptext").text("No Approves").clone();
+          $('#'+id).find(".show").html("0 Approve").append(clone);
+        }
       },
       error:function(res){
         console.log('error');
         console.log(res);
       }
     });
-    location.reload();
+   
   }
   }
-
-
- 
 </script>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

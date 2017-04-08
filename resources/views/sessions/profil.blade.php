@@ -14,6 +14,7 @@
   
   
   
+  
   @foreach($ar as $artical)
 @include('layouts.modal_comment')
 
@@ -27,10 +28,12 @@
   <img style="width:50%;height:50%;" src="storage/image/{{$artical->file_name}}">
  <br>
 @endif
+<br><br>
     <p class="card-text">{{$artical->body}}</p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
-    Added {{$artical->created_at->toFormattedDateString()}}
+    Added at 
+  {{$artical->created_at->toFormattedDateString()}}
 
 </div>
   </div>
@@ -38,39 +41,44 @@
 
   <div class="card-block" id="{{$artical->id}}">
     @if ($artical->approves->count()==0)
-   <a href="/approve/{{$artical->id}}" >
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+  
    
-    <strong>0  Approve</strong>
-     </a>
+    0  Approve
+    </button>
     @elseif ($artical->approves->count()==1)
-     <a class="tooltip show" href="/approve/{{$artical->id}}">
-    <strong>1 Approve</strong>
-    <span class="tooltiptext"> 
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+    1 Approve
+    <span class="tooltiptext "> 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
      @endforeach
       </span>
-    </a>
+      </button>
+    
     @else
-    <a class="tooltip show" href="/approve/{{$artical->id}}">
-    <strong>{{$artical->approves->count()}} Approves</strong>
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+    {{$artical->approves->count()}} Approves
     <span class="tooltiptext"> 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
+     <br>
      @endforeach
       </span>
-    </a>
+   </button>
     @endif
       
-   </form>
     <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md myCom ">Comment</button>
 
   </div>
 
 @endforeach
 
+
 </div>
 </div>
+<br><br><br>
+
 </div>
 <div class="col-2">
   
