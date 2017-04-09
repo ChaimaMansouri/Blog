@@ -1,34 +1,21 @@
 @extends('layouts.master')
-@section('head')
-<title>Home</title>
-
-
-@endsection
 @section('content')
-
-<div class="container">
 <br><br>
 <div class="row">
+<div class="col-2">
   
-   <div class="col-sm-9">
- 
-   <form>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn" type="button">Go</button>
-      </span>
-    </div>
-</form>
-<br>
-   <div class="card" >
+</div>
+<div class="col-8">
+<div class="container">
+ <div class="card" >
   
-   <h3 class="card-header" >Last Articles</h3>
+   <h3 class="card-header" >My Articles</h3>
   <br>
   
   
   
-  @foreach($a as $artical)
+  
+ @foreach($ar as $artical)
 @include('layouts.modal_comment')
 
   <div class="card-block">
@@ -44,8 +31,7 @@
     <p class="card-text">{{$artical->body}}</p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
-    Added by 
-  <a href="/user/{{$artical->user->id}}">{{$artical->user->login}}</a> at 
+    Added at 
   {{$artical->created_at->toFormattedDateString()}}
 
 </div>
@@ -94,22 +80,14 @@
 
 @endforeach
 
-
 </div>
 </div>
-<hr>
+<br><br><br>
 
-<div class="col-sm-3">
-
-  @include('layouts.sidebar')
-    
-      </div>
+</div>
+<div class="col-2">
   
 </div>
 </div>
-
-<br>
-<br>
-<br>
 
 @endsection

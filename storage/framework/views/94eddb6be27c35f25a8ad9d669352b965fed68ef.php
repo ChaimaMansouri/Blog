@@ -37,14 +37,14 @@
     <?php if($artical->file_name): ?>
    
 
-  <img style="width:50%;height:50%;" src="storage/image/<?php echo e($artical->file_name); ?>">
+  <img style="width:50%;height:50%;" src="/storage/image/<?php echo e($artical->file_name); ?>">
  <br>
 <?php endif; ?>
     <p class="card-text"><?php echo e($artical->body); ?></p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
     Added by 
-  <a href="#"><?php echo e($artical->user->login); ?></a> at 
+  <a href="/user/<?php echo e($artical->user->id); ?>"><?php echo e($artical->user->login); ?></a> at 
   <?php echo e($artical->created_at->toFormattedDateString()); ?>
 
 
@@ -115,78 +115,5 @@
 <br>
 
 <?php $__env->stopSection(); ?>
-<script type="text/javascript">
 
-function submitForm(aid)
-{
-  url = "/comment/" + aid;
-  bodyx = $('#comment_content').val();
-  
-  $.ajax({
-      url: url,
-      method: 'post',
-      data: {
-        'body': bodyx
-      },
-      success: function(result) {
-        $('#comment_content').val("");
-        console.log(result);
-
-   
-  $("#modal_comm").load("/comment/"+aid);
-
-      
-      },
-      error: function(result) {
-        console.log('error');
-        console.log(result);
-
-      },
-    });
-
-return false;
-
-}
-  function addapp(id,user) {
-    if (!user) {
-     alert('sign in Please !');
-    }
-    if (user) {
-    $.ajax({
-      url:"/approve",
-      method:"post",
-      data:{
-      'id':id
-      },
-      success:function(res){
-        
-        var bb = JSON.parse(res);
-        if(bb.length>0)
-        {
-        var OurUsers ="";
-        $(bb).each(function(index,item){
-          OurUsers+=this.user.firstName+" "+this.user.lastName+ "<br>";
-        });
-        
-        var clone = $('#'+id).find(".tooltiptext").html(OurUsers).clone();
-        if(bb.length>1)
-        $('#'+id).find(".show").html(bb.length+" Approves").append(clone);
-        else 
-        $('#'+id).find(".show").html(bb.length+" Approve").append(clone);
-        }
-        else
-        { 
-           var clone = $('#'+id).find(".tooltiptext").text("No Approves").clone();
-          $('#'+id).find(".show").html("0 Approve").append(clone);
-        }
-      },
-      error:function(res){
-        console.log('error');
-        console.log(res);
-      }
-    });
-   
-  }
-  }
-</script>
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

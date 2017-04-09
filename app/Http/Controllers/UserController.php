@@ -67,5 +67,6 @@ $this->middleware('guest')->except(['destroy','profil']);
         auth()->logout();
         return redirect()->home();
     }
+   
   
 }

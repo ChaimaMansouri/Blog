@@ -27,7 +27,7 @@ class ApproveController extends Controller
      'artical_id' =>request('id')
      ]);
       }
-     $approve=Approve::with('user')->get()->where('artical_id',request('id'));
+     $approve=Approve::where('artical_id',request('id'))->with('user')->get();
    $json = $approve->toJson();
       return response()->json($json);
   

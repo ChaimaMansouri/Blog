@@ -15,7 +15,7 @@
   
   
   
-  @foreach($ar as $artical)
+ @foreach($ar as $artical)
 @include('layouts.modal_comment')
 
   <div class="card-block">
@@ -25,10 +25,9 @@
     @if($artical->file_name)
    
 
-  <img style="width:50%;height:50%;" src="storage/image/{{$artical->file_name}}">
+  <img style="width:50%;height:50%;" src="/storage/image/{{$artical->file_name}}">
  <br>
 @endif
-<br><br>
     <p class="card-text">{{$artical->body}}</p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
@@ -40,16 +39,23 @@
 
 
   <div class="card-block" id="{{$artical->id}}">
+  @if(auth()->id()==null)
+  
+  <?php $user = 0; ?>
+  @else
+  <?php $user=auth()->id(); ?>
+
+  @endif
     @if ($artical->approves->count()==0)
-    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
   
    
     0  Approve
     </button>
     @elseif ($artical->approves->count()==1)
-     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{$user}});">
     1 Approve
-    <span class="tooltiptext "> 
+    <span class="tooltiptext" style="width:200px" > 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
      @endforeach
@@ -57,9 +63,9 @@
       </button>
     
     @else
-    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{auth()->id()}});">
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
     {{$artical->approves->count()}} Approves
-    <span class="tooltiptext"> 
+    <span class="tooltiptext" style="width:200px"> 
     @foreach($artical->approves as $app)
      {{$app->user->firstName}} {{$app->user->lastName}}
      <br>

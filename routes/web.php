@@ -15,5 +15,5 @@ Route::post('/article/store','ArticalController@store');
 Route::get('/profil','UserController@profil');
 Route::post('/approve','ApproveController@store');
 Route::post('/photo_delete','ArticalController@delete_photo');
-Route::get('/user','UserController@userProfil');
+Route::get('/user/{id}','ArticalController@userProfil');
 

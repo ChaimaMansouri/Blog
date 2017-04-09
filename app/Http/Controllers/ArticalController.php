@@ -59,5 +59,10 @@ class ArticalController extends Controller
          Storage::delete("image/".$img);
          return "success";
     }
+     public function userProfil($id)
+    {
+        $ar=Artical::where('user_id',$id)->get();
+        return view('user',compact('ar'));
+    }
   
 }
