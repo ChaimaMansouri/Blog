@@ -8,7 +8,7 @@
 <div class="container">
  <div class="card" >
   
-   <h3 class="card-header" >My Articles</h3>
+   <h3 class="card-header" >My Articals</h3>
   <br>
   
   
@@ -16,10 +16,21 @@
   
  <?php $__currentLoopData = $ar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $artical): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <?php echo $__env->make('layouts.modal_comment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
-
+ <?php echo $__env->make('deleteArtical', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
   <div class="card-block">
+ <div class="btn-group" style="float:right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="glyphicon glyphicon-align-right"></i>
 
+  </button>
+  <div class="dropdown-menu">
+<a class="dropdown-item delar" attribute="<?php echo e($artical->id); ?>">delete artical</a>
+  <a class="dropdown-item upar" attribute="<?php echo e($artical->id); ?>">update artical</a>
+  </div>
+</div> 
+ 
     <h4 class="card-subtitle mb-2 text-muted"><?php echo e($artical->title); ?></h4>
+   
     <br>
     <?php if($artical->file_name): ?>
    
@@ -27,6 +38,7 @@
   <img style="width:50%;height:50%;" src="/storage/image/<?php echo e($artical->file_name); ?>">
  <br>
 <?php endif; ?>
+<br><br>
     <p class="card-text"><?php echo e($artical->body); ?></p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
@@ -94,4 +106,5 @@
 </div>
 
 <?php $__env->stopSection(); ?>
+
 <?php echo $__env->make('layouts.master', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

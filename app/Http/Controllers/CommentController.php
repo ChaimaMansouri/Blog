@@ -28,4 +28,16 @@ class CommentController extends Controller
 			'artical_id' => $id]);
 		return "done";
 	}
+	public function destroy()
+	{
+		 $c=Comment::find(request('id'));
+		 $c->delete();
+		 return "success";
+	}
+	public function update()
+	{
+		Comment::find(request('id'))
+				->update(['body'=>request('body')]);
+		return "success";
+	}
 }

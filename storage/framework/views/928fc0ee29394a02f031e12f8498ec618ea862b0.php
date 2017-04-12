@@ -18,7 +18,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Add Article</h4>
+          <h4 class="modal-title">Add Artical</h4>
         </div>
      
        <div class="modal-header">
@@ -28,9 +28,10 @@
     </div> 
        
         <div class="modal-body" align="left" id="AppModal">
+        <div id="dropzonecontainer">
         <form method="POST" action="/article" id="dropzone" class="dropzone dropzone-file-area dz-clickable fixedDropZone" >
             </form>
-      
+      </div>
       
          
               
@@ -40,6 +41,8 @@
        <div class="modal-footer">
     
         <button id="addarticalbtn" type="submit" class="btn btn-primary" style="float:right" onclick="return storearticle();">Add</button>
+
+        <button id="addarticalbtn" type="submit" class="btn btn-secondary" style="float:right" onclick="return canceladd();">Cancel</button>
        
         </div>
         
@@ -53,7 +56,7 @@
 
 $(document).ready(function(){
   $("#side").click(function(){
-  $("#Modal_side").modal({show: true});
+  $("#Modal_side").modal({show: true,keyboard:true});
         });
       });
 
@@ -79,6 +82,38 @@ console.log(res);
 
   });
 
+}
+function canceladd(){
+  $("#articleTitle").val("");
+$("#articleBody").val("");
+id=$(".upimage").attr('id');
+if (id) {
+  $.ajax({
+    url:"/photo_delete",
+    method:"post",
+    data:{
+      'delPhoto':id
+    },
+    success:function(res){
+      console.log(res);
+      
+      var aux = "<form method=\"POST\" action=\"/article\" id=\"dropzone\" class=\"dropzone dropzone-file-area dz-clickable fixedDropZone\" ></form>"
+      $("#dropzone").remove();
+      
+      $("#dropzonecontainer").append(aux);
+      $("#dropzone").dropzone({
+      url: "/article",
+      method: "post",
+      maxFiles: 1
+            });
+    },
+    error:function(res){
+      console.log('error');
+      console.log(res);
+    }
+  });
+}
+$("#Modal_side").modal("hide");
 }
 
 </script>

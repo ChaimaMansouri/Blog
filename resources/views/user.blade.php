@@ -9,7 +9,7 @@
 <div class="container">
  <div class="card" >
   
-   <h3 class="card-header" >My Articles</h3>
+   <h3 class="card-header" >My Articals</h3>
   <br>
   
   
@@ -28,6 +28,7 @@
   <img style="width:50%;height:50%;" src="/storage/image/{{$artical->file_name}}">
  <br>
 @endif
+<br><br>
     <p class="card-text">{{$artical->body}}</p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">

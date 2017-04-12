@@ -9,7 +9,7 @@
 <div class="container">
  <div class="card" >
   
-   <h3 class="card-header" >My Articles</h3>
+   <h3 class="card-header" >My Articals</h3>
   <br>
   
   
@@ -17,10 +17,21 @@
   
  @foreach($ar as $artical)
 @include('layouts.modal_comment')
-
+ @include('deleteArtical')
   <div class="card-block">
+ <div class="btn-group" style="float:right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="glyphicon glyphicon-align-right"></i>
 
+  </button>
+  <div class="dropdown-menu">
+<a class="dropdown-item delar" attribute="{{$artical->id}}">delete artical</a>
+  <a class="dropdown-item upar" attribute="{{$artical->id}}">update artical</a>
+  </div>
+</div> 
+ 
     <h4 class="card-subtitle mb-2 text-muted">{{$artical->title}}</h4>
+   
     <br>
     @if($artical->file_name)
    
@@ -28,6 +39,7 @@
   <img style="width:50%;height:50%;" src="/storage/image/{{$artical->file_name}}">
  <br>
 @endif
+<br><br>
     <p class="card-text">{{$artical->body}}</p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">

@@ -7,6 +7,7 @@ use App\Approve;
 
 class ApproveController extends Controller
 {
+   
     public function index($id)
    {
    	$approve=Approve::get()->where('artical_id',$id);

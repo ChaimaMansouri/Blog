@@ -16,4 +16,7 @@ Route::get('/profil','UserController@profil');
 Route::post('/approve','ApproveController@store');
 Route::post('/photo_delete','ArticalController@delete_photo');
 Route::get('/user/{id}','ArticalController@userProfil');
-
+Route::post('/delartical','ArticalController@destroy');
+Route::get('/login','ArticalController@show');
+Route::post('/delcomment','CommentController@destroy');
+Route::post('/updateCom','CommentController@update');

@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function __construct()
 {
-$this->middleware('guest')->except(['destroy','profil']);
+$this->middleware('auth')->except(['create','store','index','sign']);
 }
 
     public function create()
@@ -45,20 +45,28 @@ $this->middleware('guest')->except(['destroy','profil']);
 
 
      public function sign()
+    {if(request('remember'))
     {
-        if (! auth()->attempt(request(['login','password'])))
+        if (!auth()->attempt(request(['login','password']),'true'))
          {
             return back()->withErrors([
             'message' => 'Please check your login and password']);
         }
-           
+          }
+          else{
+            if (!auth()->attempt(request(['login','password'])))
+         {
+            return back()->withErrors([
+            'message' => 'Please check your login and password']);
+        }
+          } 
             return redirect()->home();
         
     }
 
     public function profil()
     {
-        $ar=Artical::where('user_id',auth()->id())->get();
+        $ar=Artical::where('user_id',auth()->id())->latest()->get();
         return view('sessions.profil',compact('ar'));
     }
 

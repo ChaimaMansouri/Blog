@@ -2,13 +2,16 @@
 <html>
 <head>
   <?php echo $__env->yieldContent('head'); ?>
-    <script src="/js/jquery/dist/jquery.js"></script>
+   <script type="text/javascript" src="/js/jquery/dist/jquery.js"></script>
+  <link rel="stylesheet" type="text/css" href="/tether-1.3.3/dist/css/tether.css">
+  <script type="text/javascript" src="/tether-1.3.3/dist/js/tether.js"></script>
+   
     <link rel="stylesheet" href="/js/jquery/dist/jquery-ui.css">
-<script src="/js/jquery/dist/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/jquery/dist/jquery-ui.min.js"></script>
    
   <link rel="stylesheet" href="/css/bootstrap.css">
-<script src="/js/bootstrap.js"></script>
-<script type="text/javascript" src="/js/dropzone.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+<script type="text/javascript" type="text/javascript" src="/js/dropzone.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/dropzone.css">
  
   
@@ -45,11 +48,8 @@ function submitForm(aid)
       success: function(result) {
         $('#comment_content').val("");
         console.log(result);
-
-   
   $("#modal_comm").load("/comment/"+aid);
 
-      
       },
       error: function(result) {
         console.log('error');
@@ -57,8 +57,6 @@ function submitForm(aid)
 
       },
     });
-
-return false;
 
 }
   function addapp(id,user) {
@@ -107,7 +105,49 @@ return false;
         console.log(res);
       }
     });
-   
   }
   }
+$(document).ready(function(){
+    $(".delar").click(function(event){
+     $("#deletear").modal({show: true});
+     $("#idDel").attr("value",$(event.delegateTarget).attr("attribute"))
+        });
+    $(".upar").click(function(){
+
+    });
+    $(".delcom").click(function(event){
+     $("#deletecom").modal({show: true});
+     $("#idCom").attr("value",$(event.delegateTarget).attr("attribute"))
+        });
+    $("a").css("cursor","pointer");
+
+    $(".myCom").click(function(){
+     var id=$(this).parent().attr('id');
+      $(".formClassComm").attr("id",id);
+      $("#myModal").modal({keyboard:true,show: true});
+    $("#modal_comm").load("/comment/"+$(this).parent().attr('id'));
+        });
+      });
+      
+function deletar(id)
+{
+  
+  $.ajax({
+    url:"/delartical",
+    method:"post",
+    data:{
+      'id':id
+    },
+    success:function(res){
+      console.log(res);
+      location.reload();
+    },
+      error:function(res){
+        console.log('error');
+        console.log(res);
+      }
+    
+  });
+   }
+ 
 </script>

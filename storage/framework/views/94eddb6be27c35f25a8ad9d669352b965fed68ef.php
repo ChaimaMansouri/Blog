@@ -10,19 +10,11 @@
 <div class="row">
   
    <div class="col-sm-9">
- 
-   <form>
-    <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for...">
-      <span class="input-group-btn">
-        <button class="btn" type="button">Go</button>
-      </span>
-    </div>
-</form>
+ <br><br>
 <br>
    <div class="card" >
   
-   <h3 class="card-header" >Last Articles</h3>
+   <h3 class="card-header" >Last Articals</h3>
   <br>
   
   
@@ -40,6 +32,7 @@
   <img style="width:50%;height:50%;" src="/storage/image/<?php echo e($artical->file_name); ?>">
  <br>
 <?php endif; ?>
+<br><br>
     <p class="card-text"><?php echo e($artical->body); ?></p>
 
     <div class="container card-subtitle mb-2 text-muted" align="right">
@@ -61,10 +54,11 @@
 
   <?php endif; ?>
     <?php if($artical->approves->count()==0): ?>
-    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
-  
-   
+    <button type="button" class=" tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">  
     0  Approve
+     <span class="tooltiptext" style="width:200px" > 
+    No Approves
+      </span>
     </button>
     <?php elseif($artical->approves->count()==1): ?>
      <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp(<?php echo e($artical->id); ?>,<?php echo e($user); ?>);">
