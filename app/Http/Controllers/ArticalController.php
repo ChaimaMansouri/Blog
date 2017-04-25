@@ -85,5 +85,36 @@ class ArticalController extends Controller
        
       return "success";
     }
+    function updateData(){
+        $a=Artical::find(request('id'));
+        $j=$a->toJson();
+        return response()->json($j);
+    }
+        public function updateArtical()
+    {
+       
+        $this->validate(request(),['body'=>'required']);
+        $name=request('file_name');
+
+        $a=Artical::find(request('id'));
+        
+        if($name){
+        $a->update([
+            'title' => request('title'),
+            'body' => request('body'),
+            'file_name' => $name,
+            'user_id' => auth()->id()]);
+            }
+        else
+    {
+       $a->update([
+            'title' => request('title'),
+            'body' => request('body'),
+            'file_name' => '',
+            'user_id' => auth()->id()]);
+        
+    }
+        return "success";
+    }
   
 }

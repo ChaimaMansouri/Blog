@@ -13,13 +13,25 @@
   <br>
   
   
-  
-  
+  @include('updateArtical')
+   @include('deleteArtical')
  @foreach($ar as $artical)
 @include('layouts.modal_comment')
 
   <div class="card-block">
+  @if($artical->user_id==auth()->id())
 
+<div class="btn-group" style="float:right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="glyphicon glyphicon-align-right"></i>
+
+  </button>
+  <div class="dropdown-menu">
+<a class="dropdown-item delar" attribute="{{$artical->id}}">delete artical</a>
+  <a class="dropdown-item upar" onclick="updateArtical('{{$artical->id}}');">update artical</a>
+  </div>
+</div> 
+@endif
     <h4 class="card-subtitle mb-2 text-muted">{{$artical->title}}</h4>
     <br>
     @if($artical->file_name)
@@ -48,13 +60,13 @@
 
   @endif
     @if ($artical->approves->count()==0)
-    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
+    <button type="button" class="btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp('{{$artical->id}}','{{$user}}');">
   
    
     0  Approve
     </button>
     @elseif ($artical->approves->count()==1)
-     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp({{$artical->id}},{{$user}});">
+     <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md"  onclick="return addapp('{{$artical->id}}','{{$user}}');">
     1 Approve
     <span class="tooltiptext" style="width:200px" > 
     @foreach($artical->approves as $app)
@@ -64,7 +76,7 @@
       </button>
     
     @else
-    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp({{$artical->id}},{{$user}});">
+    <button type="button" class="tooltip show btn btn-outline-secondary btn-sm btn-success btn-md" onclick="return addapp('{{$artical->id}}','{{$user}}');">
     {{$artical->approves->count()}} Approves
     <span class="tooltiptext" style="width:200px"> 
     @foreach($artical->approves as $app)

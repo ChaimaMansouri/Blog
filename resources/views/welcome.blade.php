@@ -18,13 +18,24 @@
    <h3 class="card-header" >Last Articals</h3>
   <br>
   
-  
-  
+  @include('updateArtical')
+   @include('deleteArtical')
   @foreach($a as $artical)
 @include('layouts.modal_comment')
 
   <div class="card-block">
+  @if($artical->user_id==auth()->id())
+<div class="btn-group" style="float:right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="glyphicon glyphicon-align-right"></i>
 
+  </button>
+  <div class="dropdown-menu">
+<a class="dropdown-item delar" attribute="{{$artical->id}}">delete artical</a>
+  <a class="dropdown-item upar" onclick="updateArtical('{{$artical->id}}');">update artical</a>
+  </div>
+</div> 
+@endif
     <h4 class="card-subtitle mb-2 text-muted">{{$artical->title}}</h4>
     <br>
     @if($artical->file_name)

@@ -20,3 +20,5 @@ Route::post('/delartical','ArticalController@destroy');
 Route::get('/login','ArticalController@show');
 Route::post('/delcomment','CommentController@destroy');
 Route::post('/updateCom','CommentController@update');
+Route::post('/upardata','ArticalController@updateData');
+Route::post('/updateartical','ArticalController@updateArtical');

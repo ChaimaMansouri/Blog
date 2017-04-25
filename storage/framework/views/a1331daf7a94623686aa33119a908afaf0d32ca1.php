@@ -149,5 +149,97 @@ function deletar(id)
     
   });
    }
+   function updateArtical(id)
+   {
+    $.ajax({
+      url:"/upardata",
+      method:"post",
+      data:{
+        'id':id
+      },
+      success:function(res){
+    
+        var resulat=JSON.parse(res);
+        
+        $("#articalModalupdate #articleTitleupdate").val(resulat.title);
+        $("#articalModalupdate #articleBodyupdate").val(resulat.body);
+        
+        photo="<div class=\"dz-preview upimage dz-processing dz-image-preview dz-success dz-complete\" attribute=\""+resulat.id+"\" id=\""+resulat.file_name+"\">  <div class=\"dz-image\"><img width=\"100%\" height=\"100%\" data-dz-thumbnail=\"\" alt=\""+resulat.file_name+"\" src=\"/storage/image/"+resulat.file_name+"\"></div>  <div class=\"dz-details\">    <div class=\"dz-size\"><span data-dz-size=\"\"><strong>69.5</strong> KB</span></div>    <div class=\"dz-filename\"><span data-dz-name=\"\">"+resulat.file_name+"</span></div>  </div>  <div class=\"dz-progress\"><span class=\"dz-upload\" data-dz-uploadprogress=\"\" style=\"width: 100%;\"></span></div>  <div class=\"dz-error-message\"><span data-dz-errormessage=\"\"></span></div>  <div class=\"dz-success-mark\">    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">      <title>Check</title><defs></defs><g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">       </g>    </svg>  </div>  <div class=\"dz-error-mark\">    <svg width=\"54px\" height=\"54px\" viewBox=\"0 0 54 54\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" xmlns:sketch=\"http://www.bohemiancoding.com/sketch/ns\">      <title>Error</title>      <defs></defs>      <g id=\"Page-1\" stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\" sketch:type=\"MSPage\">        <g id=\"Check-+-Oval-2\" sketch:type=\"MSLayerGroup\" stroke=\"#747474\" stroke-opacity=\"0.198794158\" fill=\"#FFFFFF\" fill-opacity=\"0.816519475\"></g></g>    </svg>  </div><a class=\"dz-remove\" href=\"javascript:undefined;\" data-dz-remove=\"\" onclick=\"suppFile('"+resulat.file_name+"','"+resulat.id+"');\">Remove file</a></div>";
+        drop="<form method=\"POST\" action=\"/article\" id=\"dropzoneup\" attribute=\""+resulat.id+"\" class=\"dropzone dropzone-file-area dz-clickable fixedDropZone\" ></form><input class=\"dz-hidden-input\" type=\"file\" name=\"file\" style=\"visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;\">";
+        $('#articalModalupdate #photoupdatezone').children().remove();
+$('#articalModalupdate #photoupdatezone').append(drop);
+         $("articalModalupdate #dropzoneup").dropzone({
+          url:"/article",
+          maxFiles:"1",
+          method : "post"
+          });
+       $('#articalModalupdate #dropzoneup').append(photo);
+        $("#articalModalupdate").modal({
+          show:true,
+          keyboard:true
+        });
+
+      },
+      error:function(res){
+        console.log('error');
+        console.log(res);
+      }
+    });
+    
+   }
+   function suppFile(idp,id)
+   {
+     $.ajax({
+                    url:"/photo_delete",
+                    method:"post",
+                    data: {
+                        'delPhoto':idp
+                    },
+                    success:function(res)
+                    {
+                        
+                        $('#articalModalupdate #photoupdatezone').children().remove();
+
+   drop="<form method=\"POST\" action=\"/uploadPhoto\"  class=\"dropzone dz-clickable\" id=\"dropzoneup\" attribute=\""+id+"\"><div class=\"dz-default dz-message\"><span>Drop Photo here to upload</span></div></form><input type=\"file\" name=\"file\" class=\"dz-hidden-input\" style=\"visibility: hidden; position: absolute; top: 0px; left: 0px; height: 0px; width: 0px;\">";
+$('#articalModalupdate #photoupdatezone').append(drop);
+ $("#articalModalupdate #dropzoneup").dropzone({
+url:"/article",
+maxFiles:"1",
+method : "post"
+});
+},
+error:function(res){
+console.log('error');
+console.log(res);
+}
+});
+
+   }
+   function updateFunction(idar)
+   {
+    photo=$('#articalModalupdate .upimage').attr('id');
+    title=$('#articalModalupdate input[name="title"]').val();
+    body=$('#articalModalupdate textarea[name="body"]').val();
+  console.log(photo+title+body);
+    $.ajax({
+      url:"/updateartical",
+      method:"post",
+      data:{
+        'id':idar,
+        'file_name':photo,
+        'title':title,
+        'body':body
+              },
+      success:function(res){
+        console.log(res);
+        location.reload();
+      },
+      error:function(res){
+        console.log('error');
+        console.log(res);
+      }
+    });
+    
+   }
  
 </script>

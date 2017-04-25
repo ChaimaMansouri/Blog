@@ -17,13 +17,24 @@
    <h3 class="card-header" >Last Articals</h3>
   <br>
   
-  
-  
+  <?php echo $__env->make('updateArtical', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+   <?php echo $__env->make('deleteArtical', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
   <?php $__currentLoopData = $a; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $artical): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 <?php echo $__env->make('layouts.modal_comment', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
 
   <div class="card-block">
+  <?php if($artical->user_id==auth()->id()): ?>
+<div class="btn-group" style="float:right">
+  <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   <i class="glyphicon glyphicon-align-right"></i>
 
+  </button>
+  <div class="dropdown-menu">
+<a class="dropdown-item delar" attribute="<?php echo e($artical->id); ?>">delete artical</a>
+  <a class="dropdown-item upar" onclick="updateArtical('<?php echo e($artical->id); ?>');">update artical</a>
+  </div>
+</div> 
+<?php endif; ?>
     <h4 class="card-subtitle mb-2 text-muted"><?php echo e($artical->title); ?></h4>
     <br>
     <?php if($artical->file_name): ?>
